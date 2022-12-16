@@ -23,6 +23,7 @@ export const EmployeeDataPage = () => {
     }
 
     const requestFilter = (value) => {
+        // eslint-disable-next-line array-callback-return
         const newData = data.filter(item => {
             if (
                 ((value.logID !== '') && String(item.logId).includes(value.logID)) ||
