@@ -17,28 +17,18 @@ export const EmployeeDataPage = () => {
             });
     }, [])
 
-    console.log('api data', data)
-
     const onSearch = (value) => {
         const newData = data.filter((item) => String(item.logId).includes(value))
         setFilterData(newData);
     }
 
     const requestFilter = (value) => {
-        console.log('request', value)
-
         const newData = data.filter(item => {
             if (
                 ((value.logID !== '') && String(item.logId).includes(value.logID)) ||
                 ((value.applicationID !== '') && String(item.applicationId).includes(value.applicationID))
-                //  ((value.actionTYPE !== '') && String(item.actionType).includes(value.actionTYPE)) ||
-                //  ((value.applicationTYPE !== '') && String(item.applicationType).includes(value.applicationTYPE))
-                //  (value.toDate !== '' && item.creationTimestamp < value.toDate) ||
-                //  (value.fromDate !== '' && item.creationTimestamp > value.fromDate)
-            ) {
-                console.log('itemmm', item)
-                return item
-            }
+            )  
+            return item
         })
         setFilterData(newData);
     }
