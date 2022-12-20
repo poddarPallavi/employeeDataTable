@@ -2,9 +2,10 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import { Button, MenuItem, TextField, Typography } from '@mui/material';
+import { useSearchParams } from "react-router-dom";
 
 export const FilterNew = ({ data, requestFilter }) => {
-  
+    const [searchParams, setSearchParams] = useSearchParams(); 
     const [searchLog, setSearchLog] = React.useState(
         {
             logID: '',
@@ -52,7 +53,11 @@ export const FilterNew = ({ data, requestFilter }) => {
 
     const submitHandler = () => {
         requestFilter(searchLog)
+        const filterParams = Object.entries(searchLog).filter((item) => item[1] !== "");
+        const obj = Object.fromEntries(filterParams);
+        setSearchParams(obj);
     }
+
     return (
         <Box sx={{ flexGrow: 1, margin: 2 }}>
             <Grid container spacing={2} >

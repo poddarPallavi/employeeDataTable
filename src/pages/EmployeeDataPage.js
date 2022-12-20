@@ -18,10 +18,11 @@ export const EmployeeDataPage = () => {
     }, [])
 
     const requestFilter = (value) => {
-        const fv = Object.entries(value).filter((item, index) => item[1] !== "");
+        const filterData = Object.entries(value).filter((item, index) => item[1] !== "");
+
         const newData = data.filter(item => {
             var count = 0;
-            fv.map(v => {
+            filterData.map(v => {
                 if ((v[0] === "logID") && String(item.logId).includes(v[1])) { count++ } else
                     if ((v[0] === "actionTYPE") && v[1] === item.actionType) { count++ } else
                         if ((v[0] === "applicationTYPE") && v[1] === item.applicationType) { count++ } else
@@ -29,7 +30,7 @@ export const EmployeeDataPage = () => {
                                 if ((v[0] === "fromDate") && new Date(v[1]).getTime() <= new Date(item.creationTimestamp).getTime()) { count++ } else
                                     if ((v[0] === "toDate") && new Date(v[1]) >= new Date(item.creationTimestamp).getTime()) { count++ }
             })
-            if(fv.length === count) return item
+            if(filterData.length === count) return item
         })
         setFilterData(newData);
     }

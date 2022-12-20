@@ -4,9 +4,9 @@ import React from 'react'
 export const Header = () => {
     return (
         <Breadcrumbs separator="›" aria-label="breadcrumb">
-            <Link underline="hover" key="1" color="primary" href="/"> Home</Link>,
-            <Link underline="hover" key="1" color="primary" href="/">Administration</Link>,
-            <Link color='secondary' underline="hover">Logger Search</Link>
+            <Link aria-label='home' underline="hover" key="1" color="primary" href="/"> Home</Link>,
+            <Link aria-label='administration' underline="hover" key="1" color="primary" href="/">Administration</Link>,
+            <Link aria-label='search' color='secondary' underline="hover">Logger Search</Link>
         </Breadcrumbs>
     )
 }
