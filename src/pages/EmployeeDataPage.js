@@ -9,7 +9,7 @@ export const EmployeeDataPage = () => {
     const [filterData, setFilterData] = React.useState([]);
 
     React.useEffect(() => {
-        fetch('https://run.mocky.io/v3/a2fbc23e-069e-4ba5-954c-cd910986f40f')
+        fetch(' https://run.mocky.io/v3/a2fbc23e-069e-4ba5-954c-cd910986f40f' )
             .then(response => response.json())
             .then(d => {
                 setData(d?.result?.auditLog)
@@ -17,28 +17,28 @@ export const EmployeeDataPage = () => {
             });
     }, [])
 
-    const onSearch = (value) => {
-        const newData = data.filter((item) => String(item.logId).includes(value))
-        setFilterData(newData);
-    }
-
     const requestFilter = (value) => {
-        // eslint-disable-next-line array-callback-return
+        const fv = Object.entries(value).filter((item, index) => item[1] != "");
         const newData = data.filter(item => {
-            if (
-                ((value.logID !== '') && String(item.logId).includes(value.logID)) ||
-                ((value.applicationID !== '') && String(item.applicationId).includes(value.applicationID))
-            )  
-            return item
+            var count = 0;
+            fv.map(v => {
+                if ((v[0] === "logID") && String(item.logId).includes(v[1])) { count++ } else
+                    if ((v[0] === "actionTYPE") && v[1] === item.actionType) { count++ } else
+                        if ((v[0] === "applicationTYPE") && v[1] === item.applicationType) { count++ } else
+                            if ((v[0] === "applicationID") && String(item.applicationId).includes(v[1])) { count++ } else
+                                if ((v[0] === "fromDate") && new Date(v[1]).getTime() <= new Date(item.creationTimestamp).getTime()) { count++ } else
+                                    if ((v[0] === "toDate") && new Date(v[1]) >= new Date(item.creationTimestamp).getTime()) { count++ }
+            })
+            if(fv.length === count) return item
         })
         setFilterData(newData);
     }
 
     return (
-        <div>
+        <div style={{ margin: 5 }}>
             <Header />
             <Divider style={{ marginTop: '10px' }} />
-            <FilterNew data={data} onSearch={onSearch} requestFilter={requestFilter}  />
+            <FilterNew data={data} requestFilter={requestFilter} />
             <DataGridTable data={filterData} />
         </div>
     )

@@ -3,8 +3,8 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import { Button, MenuItem, TextField, Typography } from '@mui/material';
 
-export const FilterNew = ({ data, onSearch, requestFilter }) => {
-
+export const FilterNew = ({ data, requestFilter }) => {
+  
     const [searchLog, setSearchLog] = React.useState(
         {
             logID: '',
@@ -23,11 +23,18 @@ export const FilterNew = ({ data, onSearch, requestFilter }) => {
         return `${element?.actionType}`;
     })
 
-    const uniqueApplication = [...new Set(applicationTypeArray)]
-    const uniqueAction = [...new Set(actionTypeArray)]
+    const uniqueApplicationList = [...new Set(applicationTypeArray)]
+    const uniqueActionList = [...new Set(actionTypeArray)]
+
+    var uniqueApplication = uniqueApplicationList.filter(elements => {
+        return elements !== "null";
+       });
+
+       var uniqueAction = uniqueActionList.filter(elements => {
+        return elements !== "null";
+       });
 
     const filterHandler = (value, name) => {
-        console.log('event', value, name)
         if (name === 'logID') {
             setSearchLog({ ...searchLog, logID: value })
         } else if (name === 'actionTYPE') {
@@ -41,14 +48,10 @@ export const FilterNew = ({ data, onSearch, requestFilter }) => {
         } else if (name === 'applicationID') {
             setSearchLog({ ...searchLog, applicationID: value })
         }
-        // onSearch(value);
     }
-
-    console.log('searchLog', searchLog)
 
     const submitHandler = () => {
         requestFilter(searchLog)
-
     }
     return (
         <Box sx={{ flexGrow: 1, margin: 2 }}>
