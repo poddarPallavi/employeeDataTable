@@ -18,7 +18,7 @@ export const EmployeeDataPage = () => {
     }, [])
 
     const requestFilter = (value) => {
-        const fv = Object.entries(value).filter((item, index) => item[1] != "");
+        const fv = Object.entries(value).filter((item, index) => item[1] !== "");
         const newData = data.filter(item => {
             var count = 0;
             fv.map(v => {
